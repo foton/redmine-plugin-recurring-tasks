@@ -1,0 +1,69 @@
+#encoding: utf-8
+# English strings go here for Rails i18n
+cs:
+  label_recurring_tasks:    "Periodické úkoly"
+  label_recurring_task:     "Periodický úkol"
+  label_current_issue:      "Aktuální úkol pro zopakování"
+  label_recurrence_pattern: "Opakování:"
+  label_add_recurring_task: "Zadat opakování úkolu"
+  label_no_recurring_tasks: "Není zadán žádný periodický úkol."
+  label_next_scheduled_run: "Následující opakování"
+  label_no_recurrence:      "Bez opakování."
+  label_no_project:         "Bez projektu."
+  
+  label_recurs_fixed: "pravidelně podle plánu"
+  label_recurs_dependent: "od ukončení předchozího úkolu/opakování"
+  
+  label_recurring_task_issue_empty: "N/A"
+  label_recurring_task_project_empty: "N/A"
+  
+  label_belongs_to_project: "Spadá pod projekt"
+  label_assigned_to: "Přiřazeno"
+
+  error_invalid_interval:   "Interval není validní."
+  error_invalid_modifier:   "Modifikátor intervalu není validní."
+  error_recurring_task_not_found: "Úkol s opakováním nebyl nalezen."
+  error_recurring_task_could_not_remove: "Z úkolu nelze odstranit opakování."
+  
+  field_interval_number: "Opakovat po"
+  field_interval_unit: "Jednotka"
+  field_interval_modifier: "Upřesnění intervalu"
+  field_fixed_schedule: "Pevný plán?"
+  field_recurrence: 
+     one: "Opakování"
+     other: "Opakování"
+  field_please_select: "--- Prosím vyberte ---"
+  
+  interval_day: 
+    one: "den"
+    few: "dny" 
+    other: "dny"
+  interval_week:
+    one: "týden"
+    few: "týdny" 
+    other: "týdny"
+  interval_month:
+    one: "měsíc"
+    few: "měsíce" 
+    other: "měsíců"
+  
+  interval_year: 
+    one: "rok"
+    few: "roky"
+    other: "roky"
+
+  month_modifier_day_from_first: "každý %{days_from_bom} den v měsíci"
+  month_modifier_day_to_last: "každý %{days_to_eom} den před koncem měsíce"
+  month_modifier_dow_from_first: "každý %{dows_from_bom} %{day_of_week}"
+  month_modifier_dow_to_last: "každý %{dows_to_eom} do posledního %{day_of_week}"
+
+  recurring_task_created: "Opakování zapsáno. "
+  recurring_task_saved: "Opakování zapsáno. "
+  recurring_task_removed: "Opakování zrušeno. "
+  
+  help_add_general_recurring_task: "Možná pro Vás bude jednodušší přidat opakování skrz stránku s konkrétním úkolem."
+
+  # settings (admins)
+  label_recurring_tasks_setting_show_top_menu: "Zobrazit v horním menu?"
+  label_recurring_tasks_setting_reopen_issue: "Znovu otevřít úkol při opakování?"
+  label_recurring_tasks_setting_journal_user: "Attribute issue journals to user id:"
