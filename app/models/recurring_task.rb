@@ -26,10 +26,10 @@ class RecurringTask < ActiveRecord::Base
   # must come before validations otherwise uninitialized
   # INTERVAL_UNITS_LOCALIZED = [l(:interval_day), l(:interval_week), l(:interval_month), l(:interval_year)] #41
   INTERVAL_UNITS_LOCALIZED = {
-    INTERVAL_DAY => l(:interval_day),
-    INTERVAL_WEEK => l(:interval_week),
-    INTERVAL_MONTH => l(:interval_month),
-    INTERVAL_YEAR => l(:interval_year)
+    INTERVAL_DAY => l(:interval_day, count: 1),
+    INTERVAL_WEEK => l(:interval_week, count: 1),
+    INTERVAL_MONTH => l(:interval_month, count: 1),
+    INTERVAL_YEAR => l(:interval_year, count: 1)
   }
   MONTH_MODIFIERS_LOCALIZED = {
     MONTH_MODIFIER_DAY_FROM_FIRST => l(:month_modifier_day_from_first),
@@ -63,7 +63,7 @@ class RecurringTask < ActiveRecord::Base
   validates_associated :issue # just in case we build in functionality to add an issue at the same time, verify the issue is ok  
   
   # text for the interval name
-  def interval_localized_name
+  def interval_localized_name(count = 1)
     if new_record?
       @interval_localized_name
     else
@@ -156,11 +156,11 @@ class RecurringTask < ActiveRecord::Base
     days_to_eom = (prev_date.end_of_month.mday - prev_date.mday + 1).to_i
     #print days_to_eom, " ", prev_date.end_of_month
     values = {
-      :days_from_bom => prev_date.mday.ordinalize,
-      :days_to_eom => days_to_eom.ordinalize,
-      :day_of_week => prev_date.strftime("%A"),
-      :dows_from_bom => ((prev_date.mday - 1) / 7 + 1).ordinalize,
-      :dows_to_eom => (((prev_date.end_of_month.mday - prev_date.mday).to_i / 7) + 1).ordinalize,
+      :days_from_bom => prev_date.mday.to_s+".",
+      :days_to_eom => days_to_eom.to_s+".",
+      :day_of_week => I18n.t("date.day_names")[prev_date.wday],
+      :dows_from_bom => ((prev_date.mday - 1) / 7 + 1).to_s+".",
+      :dows_to_eom => (((prev_date.end_of_month.mday - prev_date.mday).to_i / 7) + 1).to_s+".",
     }
     Hash[MONTH_MODIFIERS_LOCALIZED.map{|k,v| [k, v % values]}]
   end
@@ -290,11 +290,27 @@ class RecurringTask < ActiveRecord::Base
     IssueStatus.default
   end
   
+  def interval_unit_to_sym
+    case interval_unit
+      when INTERVAL_DAY
+        :interval_day
+      when INTERVAL_WEEK
+        :interval_week
+      when INTERVAL_MONTH
+        :interval_month
+      when INTERVAL_YEAR
+        :interval_year
+     else
+       :interval_unknown_unit   
+     end
+  end
+
   #41
   def recurrence_to_s
     modifier = (interval_unit == INTERVAL_MONTH) ? " #{interval_localized_modifier}" : ""
     schedule = fixed_schedule ? l(:label_recurs_fixed) : l(:label_recurs_dependent)
-    "#{l(:label_recurrence_pattern)} #{interval_number} #{interval_localized_name.pluralize(interval_number)}#{modifier}, #{schedule}"
+    interval_localized_name_with_count=l(interval_unit_to_sym, count: interval_number)
+    "#{l(:label_recurrence_pattern)} #{interval_number} #{interval_localized_name_with_count}#{modifier}, #{schedule}"
   end
 
   

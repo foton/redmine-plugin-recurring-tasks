@@ -6,7 +6,6 @@ class RecurringTasksController < ApplicationController
   before_filter :find_optional_project # this also checks permissions
   before_filter :find_recurring_task, :except => [:index, :new, :create]
   before_filter :set_interval_units, :except => [:index, :show]
-  before_filter :set_recurrable_issues, :except => [:index, :show]
   before_filter :cancel_edit, :only => [:new, :create, :edit, :update] # #41 TODO is this necessary?
 
 
@@ -83,13 +82,6 @@ class RecurringTasksController < ApplicationController
   end
   
 private
-  def set_recurrable_issues
-    if @project
-      @recurrable_issues = @project.issues
-    else 
-      @recurrable_issues = Issue.all
-    end
-  end
 
   def find_recurring_task
     begin
